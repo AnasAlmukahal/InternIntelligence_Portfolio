@@ -31,11 +31,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // API URLs
+const API_BASE = 'http://127.0.0.1:5000';
 const API_URL = {
-    projects: '/api/public/projects',
-    skills: '/api/public/skills',
-    achievements: '/api/public/achievements',
-    contact: '/api/contact'
+    projects: '/api/projects',
+    skills: '/api/skills',
+    achievements: '/api/achievements',
 };
 
 // Fetch and display projects
