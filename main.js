@@ -31,7 +31,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // API URLs
-const API_BASE = 'http://127.0.0.1:5000';
+const API_BASE = "http://localhost:5000";
 const API_URL = {
     projects: '/api/projects',
     skills: '/api/skills',
@@ -41,7 +41,8 @@ const API_URL = {
 // Fetch and display projects
 async function fetchProjects() {
     try {
-        const response = await fetch(API_URL.projects);
+        const response = await fetch("http://127.0.0.1:5000/api/projects");
+
         const projects = await response.json();
         
         const projectsContainer = document.getElementById('projects-container');
@@ -62,7 +63,6 @@ async function fetchProjects() {
             '<p class="error">Failed to load projects. Please try again later.</p>';
     }
 }
-
 function createProjectCard(project) {
     const card = document.createElement('div');
     card.className = 'project-card';
@@ -72,6 +72,9 @@ function createProjectCard(project) {
         ? project.images[0] 
         : '/api/placeholder/400/300';
     
+    // Check if 'technologies' exists and is an array
+    const technologies = Array.isArray(project.technologies) ? project.technologies : [];
+    
     card.innerHTML = `
         <div class="project-image">
             <img src="${imageUrl}" alt="${project.title}">
@@ -80,7 +83,7 @@ function createProjectCard(project) {
             <h3>${project.title}</h3>
             <p>${project.description}</p>
             <div class="project-tech">
-                ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                ${technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
             </div>
             <div class="project-links">
                 ${project.demoUrl ? `<a href="${project.demoUrl}" target="_blank">Live Demo <i class="fas fa-external-link-alt"></i></a>` : ''}
@@ -91,11 +94,10 @@ function createProjectCard(project) {
     
     return card;
 }
-
 // Fetch and display skills
 async function fetchSkills() {
     try {
-        const response = await fetch(API_URL.skills);
+        const response = await fetch("http://127.0.0.1:5000/api/skills");
         const skills = await response.json();
         
         const programmingSkills = document.getElementById('programming-skills');
@@ -166,7 +168,7 @@ function createSkillElement(skill) {
 // Fetch and display achievements
 async function fetchAchievements() {
     try {
-        const response = await fetch(API_URL.achievements);
+        const response = await fetch("http://127.0.0.1:5000/api/achievements");
         const achievements = await response.json();
         
         const achievementsContainer = document.getElementById('achievements-container');
